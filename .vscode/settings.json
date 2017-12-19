@@ -4,7 +4,6 @@
         ".vscode": true,
         "dist": true
     },
-    "editor.fontSize": 14,
     "editor.renderWhitespace": "all",
     "editor.wordWrap": "on",
     "editor.formatOnSave": true,
