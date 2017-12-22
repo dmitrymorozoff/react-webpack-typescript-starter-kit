@@ -3,33 +3,38 @@ const webpack = require("webpack");
 const webpackMerge = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const devServer = require("./components/devserver.config");
-const sass = require("./components/sass.config");
-const css = require("./components/css.config");
-const extractCSS = require("./components/css.extract.config");
-const uglifyJS = require("./components/uglify.config");
+const devServer = require("./configs/devserver.config");
+const sass = require("./configs/sass.config");
+const css = require("./configs/css.config");
+const extractCSS = require("./configs/css.extract.config");
+const uglifyJS = require("./configs/uglify.config");
 
 const commonConfig = webpackMerge([
     {
-        entry: ["babel-polyfill", "./source/client/index.ts"],
+        entry: ["babel-polyfill", "./source/client/index.tsx"],
         output: {
             path: path.join(__dirname, "../dist"),
+            publicPath: "",
             filename: "js/bundle.js",
         },
         resolve: {
-            extensions: [".ts", ".js", ".css", ".scss", ".sass"],
+            extensions: [".ts", ".tsx", ".js", ".css", ".scss", ".sass"],
             modules: [path.resolve("./source/client"), "node_modules"],
         },
         module: {
             rules: [
                 {
-                    test: [/\.ts?$/],
+                    test: [/\.tsx?$/],
                     enforce: "pre",
                     loader: "tslint-loader",
                     exclude: /node_modules/,
                     options: {
                         emitErrors: true,
                     },
+                },
+                {
+                    test: /\.tsx?$/,
+                    loader: ["babel-loader", "awesome-typescript-loader"],
                 },
             ],
         },
@@ -49,11 +54,6 @@ const commonConfig = webpackMerge([
                 },
                 hash: true,
             }),
-            // new webpack.optimize.CommonsChunkPlugin({
-            //     name: "commons",
-            //     minChunks: Infinity,
-            // }),
-
             new CopyWebpackPlugin(
                 [
                     {
@@ -63,6 +63,9 @@ const commonConfig = webpackMerge([
                 ],
                 {},
             ),
+            new webpack.ProvidePlugin({
+                React: ["react"],
+            }),
         ],
     },
 ]);

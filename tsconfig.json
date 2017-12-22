@@ -18,9 +18,10 @@
         "allowJs": true,
         "allowUnreachableCode": true,
         "experimentalDecorators": true,
+        "jsx": "react",
         "emitDecoratorMetadata": true,
         "noUnusedLocals": true,
-        "baseUrl": "./source",
+        "baseUrl": "./source/client",
     },
     "exclude": [
         "node_modules"
