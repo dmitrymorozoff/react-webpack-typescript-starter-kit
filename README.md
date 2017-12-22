@@ -1,4 +1,4 @@
-# JavaScript TypeScript Starter Kit
+# TypeScript Webpack React Starter Kit
 
 A TypeScript boilerplate for building JavaScript libraries and projects
 
